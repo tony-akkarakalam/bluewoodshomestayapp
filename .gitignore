@@ -1,7 +1,15 @@
-node_modules
-.next
-out
-dist
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment
+.env*
 *.log
+
+# OS
 .DS_Store
 Thumbs.db
+
