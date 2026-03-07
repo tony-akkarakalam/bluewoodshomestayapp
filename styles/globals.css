@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-inter), sans-serif;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(156, 211, 255, 0.35), transparent 36%),
+    radial-gradient(circle at 85% 20%, rgba(117, 176, 228, 0.25), transparent 33%),
+    linear-gradient(180deg, #f8fcff 0%, #edf5fc 48%, #f7fbff 100%);
+  color: #12324b;
+  transition: background 240ms ease, color 240ms ease;
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at 14% 14%, rgba(63, 101, 142, 0.35), transparent 36%),
+    radial-gradient(circle at 88% 20%, rgba(45, 84, 120, 0.28), transparent 33%),
+    linear-gradient(180deg, #071423 0%, #0a1d30 50%, #0c2136 100%);
+  color: #d5e7f8;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-playfair), serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.section-shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 84rem;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-shell {
+    padding-inline: 2rem;
+  }
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 16px 44px rgba(8, 44, 78, 0.17);
+}
+
+.dark .glass-panel {
+  border: 1px solid rgba(112, 156, 193, 0.35);
+  background: rgba(15, 42, 66, 0.62);
+  box-shadow: 0 16px 44px rgba(2, 10, 19, 0.45);
+}
+
+.soft-card {
+  border: 1px solid rgba(173, 210, 240, 0.5);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(241, 249, 255, 0.88));
+  box-shadow: 0 14px 34px rgba(11, 58, 98, 0.11);
+}
+
+.dark .soft-card {
+  border: 1px solid rgba(70, 107, 138, 0.52);
+  background: linear-gradient(160deg, rgba(16, 41, 63, 0.96), rgba(13, 34, 54, 0.92));
+  box-shadow: 0 14px 34px rgba(2, 10, 19, 0.38);
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.1vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  color: #072f50;
+}
+
+.dark .section-title {
+  color: #eef7ff;
+}
+
+.section-subtitle {
+  margin-top: 0.9rem;
+  max-width: 44rem;
+  color: #35526d;
+  line-height: 1.8;
+}
+
+.dark .section-subtitle {
+  color: #aac6de;
+}
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  border: 1px solid rgba(151, 205, 249, 0.75);
+  background: linear-gradient(120deg, #083e6c, #1e6ea5 48%, #3e88ba);
+  padding: 0.9rem 1.7rem;
+  font-weight: 600;
+  color: #ffffff;
+  box-shadow: 0 12px 34px rgba(14, 82, 138, 0.3);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(14, 82, 138, 0.38);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(17, 74, 120, 0.45);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.88rem 1.5rem;
+  font-weight: 600;
+  color: #0e436f;
+  transition: all 220ms ease;
+}
+
+.dark .btn-outline {
+  border: 1px solid rgba(120, 170, 212, 0.45);
+  background: rgba(20, 48, 73, 0.7);
+  color: #d7ebfb;
+}
+
+.btn-outline:hover {
+  border-color: rgba(17, 74, 120, 0.7);
+  background: rgba(255, 255, 255, 0.92);
+  transform: translateY(-1px);
+}
+
+.dark .btn-outline:hover {
+  background: rgba(26, 58, 87, 0.9);
+  border-color: rgba(140, 189, 230, 0.68);
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.screen-safe-height {
+  height: 100vh;
+  height: 100svh;
+}
+
+.screen-safe-min-height {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.55);
+  transform: scale(0);
+  animation: ripple 720ms ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(18);
+    opacity: 0;
+  }
+}
