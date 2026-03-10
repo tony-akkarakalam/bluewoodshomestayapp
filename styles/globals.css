@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -184,6 +184,12 @@ h6 {
   min-height: 100svh;
 }
 
+.hero-layer-stable {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: opacity, transform;
+}
+
 .ripple {
   position: absolute;
   border-radius: 9999px;
@@ -197,5 +203,19 @@ h6 {
   to {
     transform: scale(18);
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,7 +1,7 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+﻿import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useMemo, useState } from "react";
 
 type HeroSectionProps = {
   heroImages: string[];
@@ -14,23 +14,59 @@ type Ripple = {
 };
 
 const fallbackImages = ["/images/hero/hero1.jpg", "/images/hero/hero2.jpg", "/images/hero/hero3.jpg"];
+const SLIDE_INTERVAL_MS = 6200;
 
 export default function HeroSection({ heroImages }: HeroSectionProps) {
   const slides = heroImages.length ? heroImages : fallbackImages;
   const [activeSlide, setActiveSlide] = useState(0);
   const [ripples, setRipples] = useState<Ripple[]>([]);
+  const [mobileGpuSafeMode, setMobileGpuSafeMode] = useState(true);
+  const prefersReducedMotion = useReducedMotion();
+  const useMinimalMotion = mobileGpuSafeMode || Boolean(prefersReducedMotion);
   const { scrollY } = useScroll();
-  const imageY = useTransform(scrollY, [0, 900], [0, 120]);
-  const glowY = useTransform(scrollY, [0, 900], [0, 180]);
+  const imageY = useTransform(scrollY, [0, 900], [0, useMinimalMotion ? 0 : 88]);
+  const glowY = useTransform(scrollY, [0, 900], [0, useMinimalMotion ? 0 : 140]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1024px), (hover: none), (pointer: coarse)");
+
+    const applyMode = () => {
+      setMobileGpuSafeMode(mediaQuery.matches);
+    };
+
+    applyMode();
+    mediaQuery.addEventListener("change", applyMode);
+    return () => mediaQuery.removeEventListener("change", applyMode);
+  }, []);
+
+  useEffect(() => {
+    const preloaders = slides.map((src) => {
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = src;
+      return image;
+    });
+
+    return () => {
+      preloaders.forEach((image) => {
+        image.src = "";
+      });
+    };
+  }, [slides]);
 
   useEffect(() => {
     if (slides.length < 2) return;
     const timer = window.setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 5800);
+    }, SLIDE_INTERVAL_MS);
 
     return () => window.clearInterval(timer);
   }, [slides.length]);
+
+  const transitionScale = useMemo(
+    () => (useMinimalMotion ? 1 : 1.075),
+    [useMinimalMotion]
+  );
 
   const handleBookClick = (event: MouseEvent<HTMLAnchorElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -50,18 +86,18 @@ export default function HeroSection({ heroImages }: HeroSectionProps) {
 
   return (
     <section id="home" className="screen-safe-height relative min-h-[39rem] w-full overflow-hidden">
-      <motion.div style={{ y: imageY }} className="absolute inset-0">
+      <motion.div style={useMinimalMotion ? undefined : { y: imageY }} className="absolute inset-0">
         {slides.map((src, index) => (
           <motion.div
             key={`${src}-${index}`}
-            className="absolute inset-0"
+            className="hero-layer-stable absolute inset-0"
             animate={{
               opacity: index === activeSlide ? 1 : 0,
-              scale: index === activeSlide ? 1.12 : 1
+              scale: index === activeSlide ? transitionScale : 1
             }}
             transition={{
-              opacity: { duration: 1.25, ease: "easeInOut" },
-              scale: { duration: 6.8, ease: "linear" }
+              opacity: { duration: useMinimalMotion ? 0.78 : 1.15, ease: "easeInOut" },
+              scale: { duration: useMinimalMotion ? 0.01 : 6.4, ease: "linear" }
             }}
           >
             <Image
@@ -70,38 +106,48 @@ export default function HeroSection({ heroImages }: HeroSectionProps) {
               fill
               priority={index === 0}
               sizes="100vw"
-              className="scale-110 object-cover blur-[2px]"
+              className={[
+                "hero-layer-stable object-cover",
+                useMinimalMotion ? "" : "scale-[1.02]"
+              ].join(" ")}
             />
             <div className="absolute inset-0 bg-[#041d34]/30" />
-            <div className="absolute inset-0 px-4 py-16 sm:px-8">
-              <div className="relative mx-auto h-full w-full max-w-6xl overflow-hidden rounded-3xl border border-white/20 bg-white/5 shadow-[0_24px_60px_rgba(4,22,39,0.38)] backdrop-blur-[1px]">
+
+            {!useMinimalMotion && (
+              <>
+                <div className="absolute inset-0 px-4 py-16 sm:px-8">
+                  <div className="relative mx-auto h-full w-full max-w-6xl overflow-hidden rounded-3xl border border-white/20 bg-white/5 shadow-[0_24px_60px_rgba(4,22,39,0.38)] backdrop-blur-[1px]">
+                    <Image
+                      src={src}
+                      alt="Bluewoods Homestay scenic view"
+                      fill
+                      priority={index === 0}
+                      sizes="100vw"
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
                 <Image
                   src={src}
                   alt="Bluewoods Homestay scenic view"
                   fill
                   priority={index === 0}
                   sizes="100vw"
-                  className="object-contain"
+                  className="hero-layer-stable object-cover opacity-20 mix-blend-screen"
                 />
-              </div>
-            </div>
-            <Image
-              src={src}
-              alt="Bluewoods Homestay scenic view"
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              className="object-cover opacity-25 mix-blend-screen"
-            />
+              </>
+            )}
           </motion.div>
         ))}
       </motion.div>
 
       <div className="absolute inset-0 bg-hero-overlay" />
-      <motion.div
-        style={{ y: glowY }}
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_22%,rgba(119,204,255,0.28),transparent_42%),radial-gradient(circle_at_78%_18%,rgba(145,212,255,0.2),transparent_48%)]"
-      />
+      {!useMinimalMotion && (
+        <motion.div
+          style={{ y: glowY }}
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_22%,rgba(119,204,255,0.28),transparent_42%),radial-gradient(circle_at_78%_18%,rgba(145,212,255,0.2),transparent_48%)]"
+        />
+      )}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(6,25,44,0.28),transparent_32%,rgba(7,30,54,0.38))]" />
 
       <div className="relative z-10 flex h-full items-center justify-center px-4 text-center">
@@ -202,3 +248,4 @@ export default function HeroSection({ heroImages }: HeroSectionProps) {
     </section>
   );
 }
+

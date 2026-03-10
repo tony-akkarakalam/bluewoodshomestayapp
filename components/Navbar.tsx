@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+﻿import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import Image from "next/image";
 import {
@@ -43,10 +43,30 @@ export default function Navbar({ logoSrc }: NavbarProps) {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let ticking = false;
+    let rafId = 0;
+
+    const applyScrollState = () => {
+      const next = window.scrollY > 24;
+      setScrolled((prev) => (prev === next ? prev : next));
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      rafId = window.requestAnimationFrame(applyScrollState);
+    };
+
+    applyScrollState();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   useEffect(() => {

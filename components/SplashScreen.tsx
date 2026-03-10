@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+﻿import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -9,12 +9,25 @@ type SplashScreenProps = {
 
 export default function SplashScreen({ logoSrc, onComplete }: SplashScreenProps) {
   const [visible, setVisible] = useState(true);
+  const [mobileGpuSafeMode, setMobileGpuSafeMode] = useState(true);
+  const prefersReducedMotion = useReducedMotion();
+  const useMinimalMotion = mobileGpuSafeMode || Boolean(prefersReducedMotion);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1024px), (hover: none), (pointer: coarse)");
+
+    const applyMode = () => {
+      setMobileGpuSafeMode(mediaQuery.matches);
+    };
+
+    applyMode();
+    mediaQuery.addEventListener("change", applyMode);
+
     const fadeTimer = window.setTimeout(() => setVisible(false), 2000);
     const completeTimer = window.setTimeout(onComplete, 2400);
 
     return () => {
+      mediaQuery.removeEventListener("change", applyMode);
       window.clearTimeout(fadeTimer);
       window.clearTimeout(completeTimer);
     };
@@ -28,15 +41,15 @@ export default function SplashScreen({ logoSrc, onComplete }: SplashScreenProps)
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.04,
-            filter: "blur(8px)",
+            scale: useMinimalMotion ? 1 : 1.04,
+            filter: useMinimalMotion ? "none" : "blur(8px)",
             transition: { duration: 0.55, ease: "easeInOut" }
           }}
         >
           <motion.div
             className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(183,226,255,0.38),transparent_34%),radial-gradient(circle_at_76%_70%,rgba(156,218,255,0.26),transparent_38%)]"
-            animate={{ opacity: [0.72, 1, 0.72] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            animate={useMinimalMotion ? { opacity: 0.9 } : { opacity: [0.72, 1, 0.72] }}
+            transition={useMinimalMotion ? { duration: 0 } : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
           />
 
           <div className="relative flex h-full w-full flex-col items-center justify-center px-4 pb-20">
@@ -65,13 +78,17 @@ export default function SplashScreen({ logoSrc, onComplete }: SplashScreenProps)
                   <motion.span
                     key={dot}
                     className="h-2 w-2 rounded-full bg-white/90"
-                    animate={{ y: [0, -6, 0], opacity: [0.35, 1, 0.35] }}
-                    transition={{
-                      duration: 0.9,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: dot * 0.12
-                    }}
+                    animate={useMinimalMotion ? { opacity: 0.8 } : { y: [0, -6, 0], opacity: [0.35, 1, 0.35] }}
+                    transition={
+                      useMinimalMotion
+                        ? { duration: 0 }
+                        : {
+                            duration: 0.9,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: dot * 0.12
+                          }
+                    }
                   />
                 ))}
               </div>

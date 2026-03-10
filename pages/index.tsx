@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+﻿import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
@@ -174,6 +174,9 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/images/logo/logo.png" />
         <link rel="apple-touch-icon" href="/images/logo/logo.png" />
+        {heroSlides.slice(0, 3).map((slide) => (
+          <link key={slide} rel="preload" as="image" href={slide} />
+        ))}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -190,8 +193,8 @@ export default function Home({
         className="relative"
       >
         <div className="pointer-events-none fixed inset-0 -z-10">
-          <div className="absolute -top-40 left-0 h-96 w-96 rounded-full bg-[#8ac9ff33] blur-3xl dark:bg-[#26405a66]" />
-          <div className="absolute right-0 top-1/4 h-[30rem] w-[30rem] rounded-full bg-[#3c7ab622] blur-3xl dark:bg-[#1f3a5566]" />
+          <div className="hidden sm:block absolute -top-40 left-0 h-96 w-96 rounded-full bg-[#8ac9ff33] blur-3xl dark:bg-[#26405a66]" />
+          <div className="hidden sm:block absolute right-0 top-1/4 h-[30rem] w-[30rem] rounded-full bg-[#3c7ab622] blur-3xl dark:bg-[#1f3a5566]" />
         </div>
         <HeroSection heroImages={heroSlides} />
         <AboutSection imageSrc={aboutImage} />
