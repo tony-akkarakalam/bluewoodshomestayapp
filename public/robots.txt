@@ -1,0 +1,5 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://bluewoodshomestay.in/sitemap.xml
+Host: bluewoodshomestay.in
