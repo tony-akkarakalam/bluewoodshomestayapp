@@ -4,14 +4,14 @@ import { Instagram, MessageCircle, Phone } from "lucide-react";
 const contactMethods = [
   {
     label: "Phone",
-    value: "+91 9745953821",
-    href: "tel:+919745953821",
+    value: "+91 9037386889",
+    href: "tel:+919037386889",
     icon: Phone
   },
   {
     label: "WhatsApp",
-    value: "+91 9745953821",
-    href: "https://wa.me/919745953821",
+    value: "+91 9037386889",
+    href: "https://wa.me/919037386889?text=Hi%20Bluewoods%20Homestay,%20I%20would%20like%20to%20enquire%20about%20booking%20availability.",
     icon: MessageCircle
   },
   {
@@ -46,7 +46,7 @@ export default function ContactSection() {
                 href={method.href}
                 target={method.href.startsWith("http") ? "_blank" : undefined}
                 rel={method.href.startsWith("http") ? "noreferrer" : undefined}
-                className="soft-card rounded-2xl p-5 transition hover:-translate-y-1"
+                className="soft-card rounded-2xl p-5 transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(125,190,255,0.18)]"
               >
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-bluewoods-deep dark:bg-[#193b5a] dark:text-blue-200">
                   <method.icon size={18} />
@@ -58,7 +58,11 @@ export default function ContactSection() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="https://wa.me/919745953821" target="_blank" rel="noreferrer" className="btn-primary">
+            <a
+            href="https://wa.me/919037386889?text=Hi%20Bluewoods%20Homestay,%20I%20would%20like%20to%20enquire%20about%20booking%20availability."
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary">
               <MessageCircle size={16} />
               WhatsApp Now
             </a>

@@ -19,9 +19,16 @@ const highlights = [
 
 const homeFacts = [
   { icon: Home, value: "Entire Home" },
-  { icon: BedDouble, value: "1 bedroom, 1 bed" },
-  { icon: Bath, value: "1 bathroom" },
-  { icon: Users, value: "Max guests: 3" }
+
+  {
+    icon: BedDouble,
+    value: "2 Bedrooms",
+    subvalue: "1 King Bed • 1 Queen Bed"
+  },
+
+  { icon: Bath, value: "1 Bathroom" },
+
+  { icon: Users, value: "Accommodates: 6" }
 ];
 
 const houseRules = [
@@ -53,7 +60,13 @@ export default function StaySection() {
                 className="rounded-2xl border border-blue-100/70 bg-white/90 p-4 text-sm text-bluewoods-ink dark:border-[#3b5d79] dark:bg-[#112f49]/85 dark:text-blue-100"
               >
                 <fact.icon size={18} className="mb-2 text-bluewoods-deep dark:text-blue-200" />
-                <p>{fact.value}</p>
+                <p className="font-semibold">{fact.value}</p>
+
+                {fact.subvalue && (
+                  <p className="mt-1 text-sm text-bluewoods-ink dark:text-blue-100">
+                      {fact.subvalue}
+                  </p>
+                )}
               </div>
             ))}
           </div>

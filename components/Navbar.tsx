@@ -166,9 +166,16 @@ export default function Navbar({ logoSrc }: NavbarProps) {
         ].join(" ")}
       >
         <a href="#home" onClick={handleNavClick("#home")} className="flex items-center gap-3">
-          <span className="relative h-10 w-28 overflow-hidden rounded-xl border border-white/40 bg-white/95 p-1 shadow-sm dark:border-white/20 dark:bg-white/90">
-            <Image src={logoSrc} alt="Bluewoods logo" fill sizes="112px" className="object-contain" />
-          </span>
+          <span className="relative h-10 w-[74px] overflow-hidden rounded-[18px] bg-white/12 p-[3px] backdrop-blur-md">
+  <Image
+    src={logoSrc}
+    alt="Bluewoods logo"
+    fill
+    sizes="74px"
+    className="object-contain rounded-[14px]"
+    priority
+  />
+</span>
           <span
             className={`hidden font-heading text-lg sm:inline sm:text-xl ${scrolled ? "text-bluewoods-deep dark:text-white" : "text-white"}`}
           >
