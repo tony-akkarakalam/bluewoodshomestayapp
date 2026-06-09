@@ -177,10 +177,10 @@ export default function Navbar({ logoSrc }: NavbarProps) {
   />
 </span>
           <span
-            className={`hidden font-heading text-lg sm:inline sm:text-xl ${scrolled ? "text-bluewoods-deep dark:text-white" : "text-white"}`}
-          >
-            Bluewoods
-          </span>
+  className={`font-heading text-sm sm:text-xl ${scrolled ? "text-bluewoods-deep dark:text-white" : "text-white"}`}
+>
+  Bluewoods
+</span>
         </a>
 
         <div className="hidden items-center gap-7 md:flex">
