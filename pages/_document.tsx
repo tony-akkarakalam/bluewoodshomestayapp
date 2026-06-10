@@ -46,10 +46,17 @@ export default function Document() {
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <script
-    dangerouslySetInnerHTML={{
-      __html: "document.documentElement.classList.remove('dark');"
-    }}
-  />
+  dangerouslySetInnerHTML={{
+    __html: `
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    `
+  }}
+/>
 </Head>
 
       <body>

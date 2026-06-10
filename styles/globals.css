@@ -87,6 +87,9 @@ h6 {
   border: 1px solid rgba(173, 210, 240, 0.5);
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(241, 249, 255, 0.88));
   box-shadow: 0 14px 34px rgba(11, 58, 98, 0.11);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .dark .soft-card {
@@ -136,7 +139,9 @@ h6 {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 34px rgba(14, 82, 138, 0.38);
+  box-shadow:
+    0 14px 34px rgba(14, 82, 138, 0.38),
+    0 0 50px rgba(125, 190, 255, 0.4);
 }
 
 .btn-outline {
@@ -162,12 +167,16 @@ h6 {
 .btn-outline:hover {
   border-color: rgba(17, 74, 120, 0.7);
   background: rgba(255, 255, 255, 0.92);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 50px rgba(125, 190, 255, 0.4);
 }
 
 .dark .btn-outline:hover {
   background: rgba(26, 58, 87, 0.9);
   border-color: rgba(140, 189, 230, 0.68);
+  box-shadow:
+    0 0 50px rgba(125, 190, 255, 0.4);
 }
 
 .hide-scrollbar {

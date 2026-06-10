@@ -107,7 +107,7 @@ export default function AmenitiesSection() {
               key={group.title}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.22 }}
-              className="soft-card rounded-2xl p-5"
+              className="soft-card rounded-2xl p-5 transition duration-300 hover:shadow-[0_0_50px_rgba(125,190,255,0.4)]"
             >
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-bluewoods-deep dark:bg-[#193b5a] dark:text-blue-200">
                 <group.icon size={18} />

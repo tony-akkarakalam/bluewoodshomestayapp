@@ -46,7 +46,7 @@ export default function ContactSection() {
                 href={method.href}
                 target={method.href.startsWith("http") ? "_blank" : undefined}
                 rel={method.href.startsWith("http") ? "noreferrer" : undefined}
-                className="soft-card rounded-2xl p-5 transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(125,190,255,0.18)]"
+                className="soft-card rounded-2xl p-5 transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(125,190,255,0.4)]"
               >
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-bluewoods-deep dark:bg-[#193b5a] dark:text-blue-200">
                   <method.icon size={18} />

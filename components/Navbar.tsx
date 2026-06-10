@@ -31,16 +31,26 @@ const NAV_CLICK_GUARD_MS = 420;
 export default function Navbar({ logoSrc }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(() => {
+  if (typeof window !== "undefined") {
+    return (localStorage.getItem("theme") as Theme) || "light";
+  }
+  return "light";
+});
   const [menuToggleLocked, setMenuToggleLocked] = useState(false);
   const lastThemeToggleAtRef = useRef(0);
   const lastMenuToggleAtRef = useRef(0);
   const lastNavClickAtRef = useRef(0);
   const menuUnlockTimerRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    document.documentElement.classList.remove("dark");
-  }, []);
+ useEffect(() => {
+  const savedTheme = localStorage.getItem("theme") as Theme | null;
+
+  if (savedTheme) {
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }
+}, []);
 
   useEffect(() => {
     let ticking = false;
@@ -78,8 +88,9 @@ export default function Navbar({ logoSrc }: NavbarProps) {
   }, [open]);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
+  document.documentElement.classList.toggle("dark", theme === "dark");
+  localStorage.setItem("theme", theme);
+}, [theme]);
 
   useEffect(() => {
     return () => {

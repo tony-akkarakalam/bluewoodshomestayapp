@@ -143,7 +143,7 @@ export default function GallerySection({ categories }: GallerySectionProps) {
                   }}
                   whileHover={{ y: -3 }}
                   transition={{ duration: 0.2 }}
-                  className="group block w-full overflow-hidden rounded-2xl border border-blue-100/70 bg-white/90 p-2 text-left shadow-soft dark:border-[#35526d] dark:bg-[#173754]/95"
+                  className="group block w-full overflow-hidden rounded-2xl border border-blue-100/70 bg-white/90 p-2 text-left shadow-soft transition duration-300 hover:shadow-[0_0_50px_rgba(125,190,255,0.4)] dark:border-[#35526d] dark:bg-[#173754]/95"
                 >
                   <div className="overflow-hidden rounded-xl bg-[#051f36]">
                     <Image

@@ -55,10 +55,13 @@ export default function StaySection() {
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {homeFacts.map((fact) => (
-              <div
-                key={fact.value}
-                className="rounded-2xl border border-blue-100/70 bg-white/90 p-4 text-sm text-bluewoods-ink dark:border-[#3b5d79] dark:bg-[#112f49]/85 dark:text-blue-100"
-              >
+              <motion.div
+  key={fact.value}
+  whileHover={{ y: -6 }}
+  transition={{ duration: 0.22 }}
+  className="rounded-2xl border border-blue-100/70 bg-white/90 p-4 text-sm text-bluewoods-ink transition duration-300 hover:shadow-[0_0_50px_rgba(125,190,255,0.4)] dark:border-[#3b5d79] dark:bg-[#112f49]/85 dark:text-blue-100"
+>
+  
                 <fact.icon size={18} className="mb-2 text-bluewoods-deep dark:text-blue-200" />
                 <p className="font-semibold">{fact.value}</p>
 
@@ -67,7 +70,7 @@ export default function StaySection() {
                       {fact.subvalue}
                   </p>
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -75,8 +78,8 @@ export default function StaySection() {
             {highlights.map((highlight) => (
               <motion.div
                 key={highlight.label}
-                whileHover={{ y: -4 }}
-                className="rounded-2xl border border-blue-100/70 bg-gradient-to-br from-white to-blue-50 p-4 shadow-sm dark:border-[#3b5d79] dark:from-[#112f49] dark:to-[#173754]"
+                whileHover={{ y: -6 }}
+                className="rounded-2xl border border-blue-100/70 bg-gradient-to-br from-white to-blue-50 p-4 shadow-sm transition duration-300 hover:shadow-[0_0_50px_rgba(125,190,255,0.4)] dark:border-[#3b5d79] dark:from-[#112f49] dark:to-[#173754]"
               >
                 <highlight.icon size={18} className="mb-2 text-bluewoods-deep dark:text-blue-200" />
                 <p className="text-sm font-medium text-bluewoods-ink dark:text-blue-100">{highlight.label}</p>
@@ -86,13 +89,15 @@ export default function StaySection() {
 
           <div className="mt-9 grid gap-3 sm:grid-cols-2">
             {houseRules.map((rule) => (
-              <div
-                key={rule.label}
-                className="rounded-2xl border border-blue-100/70 bg-white/90 p-4 text-sm text-bluewoods-ink dark:border-[#3b5d79] dark:bg-[#112f49]/85 dark:text-blue-100"
-              >
+              <motion.div
+  key={rule.label}
+  whileHover={{ y: -6 }}
+  transition={{ duration: 0.22 }}
+  className="rounded-2xl border border-blue-100/70 bg-white/90 p-4 text-sm text-bluewoods-ink transition duration-300 hover:shadow-[0_0_50px_rgba(125,190,255,0.4)] dark:border-[#3b5d79] dark:bg-[#112f49]/85 dark:text-blue-100"
+>
                 <p className="font-semibold">{rule.label}</p>
                 <p className="mt-1">{rule.value}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
 
