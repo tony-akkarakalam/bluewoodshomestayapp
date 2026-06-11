@@ -41,23 +41,48 @@ export default function SplashScreen({ logoSrc, onComplete }: SplashScreenProps)
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: useMinimalMotion ? 1 : 1.04,
-            filter: useMinimalMotion ? "none" : "blur(8px)",
-            transition: { duration: 0.55, ease: "easeInOut" }
+            scale: useMinimalMotion ? 1 : 1.12,
+            filter: useMinimalMotion ? "none" : "blur(18px)",
+            transition: {
+              duration: 0.9,
+              ease: [0.4, 0, 0.2, 1]
+            }
           }}
         >
           <motion.div
             className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(183,226,255,0.38),transparent_34%),radial-gradient(circle_at_76%_70%,rgba(156,218,255,0.26),transparent_38%)]"
             animate={useMinimalMotion ? { opacity: 0.9 } : { opacity: [0.72, 1, 0.72] }}
-            transition={useMinimalMotion ? { duration: 0 } : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            transition={
+              useMinimalMotion
+                ? { duration: 10 }
+                : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
+            }
           />
 
           <div className="relative flex h-full w-full flex-col items-center justify-center px-4 pb-20">
             <motion.div
               className="relative h-[52vh] w-full max-w-[96vw]"
-              initial={{ opacity: 0, y: 16, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.75, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={
+                useMinimalMotion
+                  ? { opacity: 1, scale: 1 }
+                  : {
+                      opacity: 1,
+                      scale: 1,
+                      y: [0, -8, 0]
+                    }
+              }
+              transition={{
+                opacity: { duration: 1.2 },
+                scale: { duration: 1.2 },
+                y: useMinimalMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }
+              }}
             >
               <Image
                 src={logoSrc}
@@ -78,7 +103,11 @@ export default function SplashScreen({ logoSrc, onComplete }: SplashScreenProps)
                   <motion.span
                     key={dot}
                     className="h-2 w-2 rounded-full bg-white/90"
-                    animate={useMinimalMotion ? { opacity: 0.8 } : { y: [0, -6, 0], opacity: [0.35, 1, 0.35] }}
+                    animate={
+                      useMinimalMotion
+                        ? { opacity: 0.8 }
+                        : { y: [0, -6, 0], opacity: [0.35, 1, 0.35] }
+                    }
                     transition={
                       useMinimalMotion
                         ? { duration: 0 }
@@ -101,7 +130,10 @@ export default function SplashScreen({ logoSrc, onComplete }: SplashScreenProps)
                   transition={{ duration: 2.2, ease: "easeInOut" }}
                 />
               </div>
-              <p className="mt-2 text-center text-xs uppercase tracking-[0.25em] text-blue-50/95">Loading</p>
+
+              <p className="mt-2 text-center text-xs uppercase tracking-[0.25em] text-blue-50/95">
+                Loading
+              </p>
             </div>
           </div>
         </motion.div>
