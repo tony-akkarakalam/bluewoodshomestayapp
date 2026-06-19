@@ -36,7 +36,7 @@ const galleryFolders = [
   { key: "bathroom", title: "Bathroom" },
   { key: "views", title: "Views" },
   { key: "common-area", title: "Common Area" },
-  { key: "balcony-garden", title: "Balcony Garden" },
+  { key: "balcony-garden", title: "Garden" },
   { key: "night-view", title: "Night View" }
 ];
 
